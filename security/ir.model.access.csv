@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pismile_demande_facturation,pismile.demande facturation,model_pismile_demande,account.group_account_invoice,1,1,1,0
+access_pismile_demande_lecture,pismile.demande lecture,model_pismile_demande,account.group_account_readonly,1,0,0,0
+access_pismile_demande_admin,pismile.demande admin,model_pismile_demande,account.group_account_manager,1,1,1,1
+access_pismile_demande_wizard,pismile.demande.wizard,model_pismile_demande_wizard,account.group_account_invoice,1,1,1,1

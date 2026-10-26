@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pismile_demande_wizard_view_form" model="ir.ui.view">
+        <field name="name">pismile.demande.wizard.form</field>
+        <field name="model">pismile.demande.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Demander le paiement PI-SPI">
+                <p class="text-muted">
+                    Le client reçoit la demande dans sa banque ou son mobile money et la valide.
+                    La facture est marquée payée automatiquement dès que le paiement est confirmé.
+                </p>
+                <group>
+                    <field name="move_id"/>
+                    <field name="partner_id"/>
+                    <field name="alias" placeholder="Téléphone ou SHID"/>
+                    <field name="enregistrer_alias"/>
+                    <field name="montant"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="motif" placeholder="Facture …"/>
+                </group>
+                <footer>
+                    <button name="action_envoyer" type="object" string="Envoyer la demande" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_pismile" model="ir.ui.view">
+        <field name="name">account.move.form.pismile</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="pismile_possible" invisible="1"/>
+                <button name="action_pismile_demander" type="object" string="Demander le paiement PI-SPI"
+                        invisible="not pismile_possible" groups="account.group_account_invoice"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="PI-SPI" name="pismile" invisible="not pismile_demande_ids">
+                    <field name="pismile_demande_ids">
+                        <list create="false" delete="false"
+                              decoration-success="statut == 'paye'" decoration-warning="statut == 'en_attente'"
+                              decoration-danger="statut in ('refuse', 'annule', 'expire', 'echec')">
+                            <field name="create_date" string="Envoyée le"/>
+                            <field name="reference"/>
+                            <field name="alias_masque"/>
+                            <field name="montant"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="statut" widget="badge"/>
+                            <field name="paye_le"/>
+                            <field name="raison"/>
+                            <field name="test" optional="hide"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_out_invoice_tree_pismile" model="ir.ui.view">
+        <field name="name">account.move.list.pismile</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='status_in_payment']" position="after">
+                <field name="pismile_statut" widget="badge" optional="show"
+                       decoration-success="pismile_statut == 'paye'" decoration-warning="pismile_statut == 'en_attente'"
+                       decoration-danger="pismile_statut in ('refuse', 'annule', 'expire', 'echec')"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

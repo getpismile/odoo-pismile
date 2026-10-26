@@ -1,0 +1,133 @@
+<!--
+  Odoo Apps Store description page. Store rules: English only, no JavaScript, no external links
+  (mailto: is allowed), images only from static/description, Bootstrap 4 classes.
+-->
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="text-center" style="margin: 16px 0 24px;">
+            <h2 style="font-weight: 700; color: #1A1510;">PI-SPI Payment Requests</h2>
+            <h4 style="color: #5F6461; font-weight: 400;">
+                Send your customer invoices as PI-SPI payment requests. Your customer approves in their bank or
+                mobile money app, and Odoo records and reconciles the payment for you.
+            </h4>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="row">
+            <div class="col-md-4" style="padding: 12px;">
+                <div style="border: 1px solid #E6E8E4; border-radius: 10px; padding: 18px; height: 100%;">
+                    <h4 style="font-weight: 700;">1. Invoice</h4>
+                    <p>Confirm a customer invoice in XOF as usual, then click
+                        <b>Request PI-SPI payment</b> (<i>Demander le paiement PI-SPI</i>).</p>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding: 12px;">
+                <div style="border: 1px solid #E6E8E4; border-radius: 10px; padding: 18px; height: 100%;">
+                    <h4 style="font-weight: 700;">2. Customer approves</h4>
+                    <p>The request reaches the customer's bank or mobile money app, showing your company name and
+                        the invoice number. One tap to pay.</p>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding: 12px;">
+                <div style="border: 1px solid #E6E8E4; border-radius: 10px; padding: 18px; height: 100%;">
+                    <h4 style="font-weight: 700;">3. Paid and reconciled</h4>
+                    <p>The money lands directly on your own account. Odoo creates the payment in your bank journal
+                        and reconciles it with the invoice.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 style="font-weight: 700; margin-top: 24px;">Features</h3>
+        <ul>
+            <li><b>Request PI-SPI payment</b> (<i>Demander le paiement PI-SPI</i>) button on confirmed customer invoices in XOF (CFA franc).</li>
+            <li>Full amount or a deposit, never more than the amount due; custom reason shown to the customer.</li>
+            <li>Payment created in the journal of your choice and reconciled with the invoice, with the PI-SPI
+                end-to-end reference for bank reconciliation.</li>
+            <li>Instant updates through a signed webhook, or every 5 minutes without a webhook (Odoo behind a
+                firewall is fine).</li>
+            <li>The customer's PI-SPI alias (phone number) is remembered on the contact.</li>
+            <li><b>PI-SPI Requests</b> menu (<i>Demandes PI-SPI</i>): pending, paid, refused and expired requests, with filters.</li>
+            <li>New request in one click after a refusal or an expiry.</li>
+            <li>Test mode: simulated payments, no money moves.</li>
+            <li>Multi-company: one key and one webhook per company.</li>
+        </ul>
+        <p>User interface in French, the language of the UEMOA markets this module is built for.</p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 style="font-weight: 700; margin-top: 24px;">Screenshots</h3>
+        <p><b>Request a payment from the invoice</b></p>
+        <img src="screenshot_1.png" class="img img-fluid" style="border: 1px solid #E6E8E4; border-radius: 6px;" alt="Request PI-SPI payment from an invoice"/>
+        <p style="margin-top: 24px;"><b>Paid and reconciled automatically</b></p>
+        <img src="screenshot_2.png" class="img img-fluid" style="border: 1px solid #E6E8E4; border-radius: 6px;" alt="Invoice paid by PI-SPI"/>
+        <p style="margin-top: 24px;"><b>All payment requests</b></p>
+        <img src="screenshot_3.png" class="img img-fluid" style="border: 1px solid #E6E8E4; border-radius: 6px;" alt="PI-SPI requests list"/>
+        <p style="margin-top: 24px;"><b>Settings</b></p>
+        <img src="screenshot_4.png" class="img img-fluid" style="border: 1px solid #E6E8E4; border-radius: 6px;" alt="pismile settings"/>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 style="font-weight: 700; margin-top: 24px;">Requirements</h3>
+        <p>This module connects Odoo to <b>pismile</b>, an external service that sends the payment requests over
+            PI-SPI, the instant payment system of the BCEAO (Central Bank of West African States). You need:</p>
+        <ul>
+            <li>Odoo 18 (Community or Enterprise) with Invoicing or Accounting, on your own server or Odoo.sh.
+                Odoo Online does not accept third-party modules.</li>
+            <li>A pismile account (pismile.com) with the Collections module (<i>Encaissement</i>) and a subscription to the Odoo
+                connector. Plans and prices are listed on pismile.com.</li>
+            <li>Your own PI-SPI access, provided by your bank or mobile money operator in the UEMOA. Money is
+                paid straight to your account: pismile never holds your funds.</li>
+            <li>Invoices in XOF (CFA franc).</li>
+        </ul>
+        <p>A free test key lets you try every case (paid, refused, expired) without real payments.</p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 style="font-weight: 700; margin-top: 24px;">Data sent to pismile</h3>
+        <p>Nothing is sent until a user clicks <b>Request PI-SPI payment</b> and confirms. For that request, Odoo
+            sends to pismile: the invoice reference, the amount, the customer's PI-SPI alias and name, the due
+            date, and the internal Odoo invoice and database identifiers (to match the answer). Odoo then reads
+            the status of its own requests. No other data from your database is sent.</p>
+        <p>The pismile key is stored in your Odoo settings; webhooks are verified with an HMAC-SHA256 signature.
+            pismile privacy policy: pismile.com/confidentialite</p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3 style="font-weight: 700; margin-top: 24px;">Installation</h3>
+        <ol>
+            <li>Install the module, then open Invoicing / Accounting &gt; Configuration &gt; Settings, block
+                <b>pismile</b>.</li>
+            <li>Paste the key created in the pismile console (<i>Encaissement &gt; Connecteurs &gt; Odoo</i>) and choose
+                the bank journal. Click <b>Test connection</b> (<i>Tester la connexion</i>).</li>
+            <li>Optional: copy the webhook URL shown in the settings into the pismile console, then paste the
+                signing secret back into Odoo.</li>
+            <li>Confirm an invoice in XOF and click <b>Request PI-SPI payment</b>.</li>
+        </ol>
+        <p>The step-by-step guide (in French) is in the pismile documentation: pismile.com/docs/connecteurs/odoo</p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="text-center" style="margin: 24px 0; padding: 20px; background: #FAFAF7; border: 1px solid #E6E8E4; border-radius: 10px;">
+            <h4 style="font-weight: 700;">Questions or help</h4>
+            <p>Write to <a href="mailto:support@pismile.com">support@pismile.com</a>. We answer in French and in
+                English.</p>
+        </div>
+    </div>
+</section>

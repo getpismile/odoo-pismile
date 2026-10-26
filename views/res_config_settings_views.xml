@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_pismile" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.pismile</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='account']" position="inside">
+                <block title="pismile — Encaissement PI-SPI" name="pismile_block">
+                    <setting id="pismile_connexion" string="Connexion à pismile"
+                             help="Clé de l'installation créée dans la console pismile (Encaissement → Connecteurs).">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label for="pismile_url_api" class="col-lg-4 o_light_label"/>
+                                <field name="pismile_url_api"/>
+                            </div>
+                            <div class="row">
+                                <label for="pismile_cle" class="col-lg-4 o_light_label"/>
+                                <field name="pismile_cle" password="True" placeholder="pmc_live_…"/>
+                            </div>
+                        </div>
+                        <div class="mt8">
+                            <button name="action_pismile_tester" type="object" string="Tester la connexion"
+                                    class="btn-link" icon="oi-arrow-right"/>
+                        </div>
+                    </setting>
+                    <setting id="pismile_paiements" string="Paiements reçus"
+                             help="Journal où pismile enregistre et lettre les paiements reçus par PI-SPI.">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label for="pismile_journal_id" class="col-lg-4 o_light_label"/>
+                                <field name="pismile_journal_id" options="{'no_create': True}"/>
+                            </div>
+                            <div class="mt8">
+                                <field name="pismile_paiement_test"/>
+                                <label for="pismile_paiement_test" class="o_light_label"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="pismile_webhook" string="Webhook"
+                             help="Copiez cette adresse dans la console pismile (installation → Événements), puis collez ici le secret whsec_… qu'elle affiche.">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label for="pismile_url_webhook" class="col-lg-4 o_light_label"/>
+                                <field name="pismile_url_webhook" widget="CopyClipboardChar" readonly="1"/>
+                            </div>
+                            <div class="row">
+                                <label for="pismile_secret_webhook" class="col-lg-4 o_light_label"/>
+                                <field name="pismile_secret_webhook" password="True" placeholder="whsec_…"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

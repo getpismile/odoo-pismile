@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pismile_demande_view_list" model="ir.ui.view">
+        <field name="name">pismile.demande.list</field>
+        <field name="model">pismile.demande</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false"
+                  decoration-success="statut == 'paye'" decoration-warning="statut == 'en_attente'"
+                  decoration-danger="statut in ('refuse', 'annule', 'expire', 'echec')">
+                <field name="create_date" string="Envoyée le"/>
+                <field name="reference"/>
+                <field name="move_id"/>
+                <field name="partner_id"/>
+                <field name="alias_masque"/>
+                <field name="montant" sum="Total"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="statut" widget="badge"
+                       decoration-success="statut == 'paye'" decoration-warning="statut == 'en_attente'"
+                       decoration-danger="statut in ('refuse', 'annule', 'expire', 'echec')"/>
+                <field name="paye_le"/>
+                <field name="test" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="pismile_demande_view_form" model="ir.ui.view">
+        <field name="name">pismile.demande.form</field>
+        <field name="model">pismile.demande</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <header>
+                    <button name="action_pismile_actualiser" type="object" string="Actualiser"
+                            invisible="statut != 'en_attente'"/>
+                    <field name="statut" widget="statusbar" statusbar_visible="en_attente,paye"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="reference"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="move_id"/>
+                            <field name="partner_id"/>
+                            <field name="alias_masque"/>
+                            <field name="montant"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="create_date" string="Envoyée le"/>
+                            <field name="echeance"/>
+                            <field name="paye_le" invisible="not paye_le"/>
+                            <field name="reference_pispi" invisible="not reference_pispi"/>
+                            <field name="payment_id" invisible="not payment_id"/>
+                            <field name="raison" invisible="not raison"/>
+                            <field name="test" invisible="not test"/>
+                            <field name="pismile_id" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pismile_demande_view_search" model="ir.ui.view">
+        <field name="name">pismile.demande.search</field>
+        <field name="model">pismile.demande</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="reference"/>
+                <field name="partner_id"/>
+                <field name="move_id"/>
+                <filter name="en_attente" string="En attente" domain="[('statut', '=', 'en_attente')]"/>
+                <filter name="payees" string="Payées" domain="[('statut', '=', 'paye')]"/>
+                <filter name="sans_suite" string="Refusées ou expirées"
+                        domain="[('statut', 'in', ('refuse', 'annule', 'expire', 'echec'))]"/>
+                <separator/>
+                <filter name="production" string="Hors test" domain="[('test', '=', False)]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter name="par_statut" string="Statut" context="{'group_by': 'statut'}"/>
+                    <filter name="par_client" string="Client" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pismile_demande" model="ir.actions.act_window">
+        <field name="name">Demandes PI-SPI</field>
+        <field name="res_model">pismile.demande</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="pismile_demande_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Aucune demande PI-SPI pour le moment</p>
+            <p>Sur une facture client validée, cliquez sur « Demander le paiement PI-SPI ».</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_pismile_demande" name="Demandes PI-SPI" parent="account.menu_finance_receivables"
+              action="action_pismile_demande" sequence="90"/>
+</odoo>
